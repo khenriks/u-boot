@@ -328,6 +328,12 @@ static int sun8i_phy_init(struct emac_eth_dev *priv, void *dev)
 	priv->phydev = phydev;
 	phy_config(priv->phydev);
 
+        // Initialize magic PHY values to fix Gigabit networking on Pine64+
+        phy_write(priv->phydev, MDIO_DEVAD_NONE, 0x1f, 0x0007);
+        phy_write(priv->phydev, MDIO_DEVAD_NONE, 0x1e, 0x00a4);
+        phy_write(priv->phydev, MDIO_DEVAD_NONE, 0x1c, 0xb591);
+        phy_write(priv->phydev, MDIO_DEVAD_NONE, 0x1f, 0x0000);
+
 	return 0;
 }
 
